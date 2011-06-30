@@ -10,7 +10,7 @@ puts "Hello, World"
 
 10.times { puts "Robert" }
 
-# Print the string "This is sentence number 1" changing the number/
+# Print the string "This is sentence number 1" changing the number
 
 i = 1
 while i < 11 do
