@@ -5,16 +5,16 @@ curlyBrackets := method(
   r
 )
 Map colon := method(
+  #writeln("COLON ", call message arguments)
   self atPut(
-    call evalArgAt(0) asMutable removePrefix("\"") removeSuffix("\"")
+    call evalArgAt(0) asMutable removePrefix("\"") removeSuffix("\""),
     call evalArgAt(1)
   )
 )
 Map asAttributes := method(
   s := ""
   self foreach(k, v, 
-    writeln(k, ":", v)
-    s = s .. k "=\"" .. v .. "\" "
+    s = "#{s}#{k}=\"#{v}\"" interpolate
   )
   s
 )
@@ -28,9 +28,11 @@ Builder do(
   forward := method(
     tag := call message name
     first := call evalArgAt(0)
-    if (first type == "Map", attributes := first)
-    attributes asAttributes println  
-    writeln(whitespace, "<#{tag}#{?attributes asAttributes}>" interpolate)
+    if (first type == "Map", 
+      writeln(whitespace, "<#{tag} #{first asAttributes}>" interpolate),
+      writeln(whitespace, "<#{tag}>" interpolate)
+    )
+
     call message arguments foreach(arg,
       self level = self level + 1
       content := self doMessage(arg)
